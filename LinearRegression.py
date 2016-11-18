@@ -8,4 +8,7 @@ def linearRegression(data):
     return w1,w0
 
 simpleLine = [(2,3),(3,4),(4,5),(5,7)]
-print(linearRegression(simpleLine))
+m, b = linearRegression(simpleLine)
+graph = sum(map(lambda x:point((x[0],x[1]), color="red"), simpleLine))
+graph += plot(m*x+b, 0, 6)
+show(graph)
