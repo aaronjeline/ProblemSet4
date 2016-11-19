@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Problem Set #4</title>
+    <script src="https://sagecell.sagemath.org/static/embedded_sagecell.js"></script>
+    <script>$(function () {
+    // Make the div with id 'mycell' a Sage cell
+    sagecell.makeSagecell({inputLocation:  'sagecell',
+                           template:       sagecell.templates.minimal,
+                           evalButtonText: 'Activate'});
+    // Make *any* div with class 'compute' a Sage cell
+    sagecell.makeSagecell({inputLocation: 'div.compute',
+                           evalButtonText: 'Evaluate'});
+    });
+    </script>
+  </head>
+  <body>
+  <h1>Problem Set 4</h1>
+
+  <h2>Problem 3</h2>
+<p>Linear Regression: </br> Parameters: </br> dataPoints: List of co-ordinates as tuples (x,y) as input to the function<</p>
+<div class="compute" id="sagecell1"><script type="application/sage">
+#Takes data, a list of tuples, each tuple containing: (x,y)
+def linearRegression(data):
+    sampleSize = len(data)
+    w1n = sampleSize * sum(map(lambda x:x[0]*x[1], data)) - sum(map(lambda x:x[0], data)) * sum(map(lambda x:x[1], data))
+    w1d = sampleSize * sum(map(lambda x:x[0]**2, data)) - sum(map(lambda x:x[0], data))**2
+    w1 = w1n/w1d
+    w0 = (sum(map(lambda x:x[1], data)) - w1 * sum(map(lambda x:x[0], data)))/sampleSize
+    return w1,w0
+
+dataPoints = [(2,3),(3,4),(4,5),(5,7)]
+min, max = 0, 6
+m, b = linearRegression(dataPoints)
+graph = sum(map(lambda x:point((x[0],x[1]), color="red"), dataPoints))
+graph += plot(m*x+b, min, max)
+show(graph)
+ </script>
+</div>
+</body>
+</html>
