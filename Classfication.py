@@ -58,5 +58,5 @@ A2 = [0, 0, 1, 1, 1]
 A3 = [0, 1, 0, 1, 0]
 Y = [False, False, False, True, True]
 LA = [A1, A2, A3]
-tree = classify(Y, LA)
-print(tree)
+entropies = map(lambda x: rankAttribute(Y, x), LA)
+print(list(entropies))
