@@ -1,20 +1,20 @@
 import random
 
 def hardThresholdStep(weights, stepSize, trainingVector, h, i):
-    return weights[i] + stepSize * (trainingVector[-1] - h(weights, trainingVector[:-1]))*trainingVector[i]
+    return weights[i] + stepSize * (trainingVector[-1] - h(weights, trainingVector[:-1])) * trainingVector[i]
 
 def h(weights, xVector):
-    val = weights[0]*xVector[0] + weights[1]-xVector[1]
+    val = weights[0]*xVector[0]+weights[1]*xVector[1]+weights[2]*xVector[2]
     if val >= 0:
-        return 2
+        return 1
     else:
         return 0
 
 def randomWeights(weightRange):
-    return (random.randint(weightRange[0],weightRange[1]), random.randint(weightRange[0],weightRange[1]))
+    return random.randint(weightRange[0],weightRange[1])
 
 
-#Allows you to specify alternate starting weights
+# Allows you to specify alternate starting weights
 def classify(trainingData, trainingFunction, stabilizationThreshold, startingWeights=None):
     weights = tuple()
     #Generate our random weights
@@ -22,7 +22,7 @@ def classify(trainingData, trainingFunction, stabilizationThreshold, startingWei
         x0 = list(map(lambda x: x[0], trainingData))
         weightRange = (min(x0), max(x0))
         del x0
-        weights = randomWeights(weightRange)
+        weights = (randomWeights(weightRange), randomWeights(weightRange), randomWeights(weightRange))
     stabilizationTime = 0
     stepSize = 0.1
     currentSolution = None
@@ -33,23 +33,24 @@ def classify(trainingData, trainingFunction, stabilizationThreshold, startingWei
             newWeights[i] = trainingFunction(weights, stepSize, sample, h, i)
         stabilizationTime += 1
         currentSolution = newWeights
+        weights = newWeights
     return currentSolution
 
 trainingData = [
-    [3,2,0],
-    [10,1,0],
-    [1,10,1],
-    [5,30,1],
-    [5,6,0],
-    [6,7,0],
-    [10,8,0],
-    [1,4,0],
-    [1,20,1],
-    [2,20,1],
-    [3,20,1],
+    [1,3,2,0],
+    [1,10,1,0],
+    [1,1,10,1],
+    [1,5,30,1],
+    [1,5,6,0],
+    [1,6,7,0],
+    [1,10,8,0],
+    [1,1,4,0],
+    [1,1,20,1],
+    [1,2,20,1],
+    [1,3,20,1],
 ]
 
-solution = classify(trainingData, hardThresholdStep, 100000)
+solution = classify(trainingData, hardThresholdStep, 1000)
 
 def drawPoint(data):
     c = ""
@@ -60,5 +61,5 @@ def drawPoint(data):
     return point((data[0],data[1]),color=c)
 
 points = sum(map(drawPoint, trainingData))
-final = plot(solution[0] * x + solution[1], 0, 10, color="green") + points
+final = plot(-(solution[1]/solution[2])*x-(solution[0]/solution[1])  , 0, 6, color="green") + points
 show(final)
