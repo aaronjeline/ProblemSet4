@@ -13,11 +13,12 @@ def h(weights, xVector):
 def randomWeights(weightRange):
     return (random.randint(weightRange[0],weightRange[1]), random.randint(weightRange[0],weightRange[1]))
 
+
 #Allows you to specify alternate starting weights
 def classify(trainingData, trainingFunction, stabilizationThreshold, startingWeights=None):
     weights = tuple()
-    if startingWeights == None:
-        #Generate our random weights
+    #Generate our random weights
+    if startingWeights==None:
         x0 = list(map(lambda x: x[0], trainingData))
         weightRange = (min(x0), max(x0))
         del x0
