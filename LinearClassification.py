@@ -48,5 +48,16 @@ trainingData = [
     [3,20,1],
 ]
 
-solution = classify(trainingData, hardThresholdStep, 10)
-print(solution)
+solution = classify(trainingData, hardThresholdStep, 100000)
+
+def drawPoint(data):
+    c = ""
+    if data[-1]==1:
+        c = "red"
+    else:
+        c = "blue"
+    return point((data[0],data[1]),color=c)
+
+points = sum(map(drawPoint, trainingData))
+final = plot(solution[0] * x + solution[1], 0, 10, color="green") + points
+show(final)
