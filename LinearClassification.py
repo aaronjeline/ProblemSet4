@@ -18,7 +18,7 @@ def randomWeights(weightRange):
 def classify(trainingData, trainingFunction, stabilizationThreshold, startingWeights=None):
     weights = tuple()
     #Generate our random weights
-    if startingWeights==None:
+    if startingWeights is None:
         x0 = list(map(lambda x: x[0], trainingData))
         weightRange = (min(x0), max(x0))
         del x0
@@ -28,7 +28,7 @@ def classify(trainingData, trainingFunction, stabilizationThreshold, startingWei
     stabilizationTime = 0
     stepSize = 0.1
     currentSolution = None
-    while(stabilizationTime < stabilizationThreshold):
+    while stabilizationTime < stabilizationThreshold :
         newWeights = list(weights)
         sample = trainingData[random.randrange(len(trainingData))]
         for i in range(len(sample[:-1])):
