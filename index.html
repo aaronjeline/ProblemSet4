@@ -22,6 +22,27 @@
   <h2>Problem 3</h2>
 <p>Linear Regression: </br> Parameters: </br> dataPoints: List of co-ordinates as tuples (x,y) as input to the function<</p>
 <div class="compute" id="sagecell1"><script type="application/sage">
+#Takes data, a list of tuples, each tuple containing: (x,y)
+def linearRegression(data):
+    sampleSize = len(data)
+    w1n = sampleSize * sum(map(lambda x:x[0]*x[1], data)) - sum(map(lambda x:x[0], data)) * sum(map(lambda x:x[1], data))
+    w1d = sampleSize * sum(map(lambda x:x[0]**2, data)) - sum(map(lambda x:x[0], data))**2
+    w1 = w1n/w1d
+    w0 = (sum(map(lambda x:x[1], data)) - w1 * sum(map(lambda x:x[0], data)))/sampleSize
+    return w1,w0
+
+dataPoints = [(2,3),(3,4),(4,5),(5,7)]
+min, max = 0, 6
+m, b = linearRegression(dataPoints)
+graph = sum(map(lambda x:point((x[0],x[1]), color="red"), dataPoints))
+graph += plot(m*x+b, min, max)
+show(graph)
+ </script>
+</div>
+
+
+<h2>Problem 4</h2>
+<div class="compute" id="sagecell2"><script type="application/sage">
 import random
 
 def hardThresholdStep(weights, stepSize, trainingVector, h, i):
@@ -47,8 +68,6 @@ def classify(trainingData, trainingFunction, stabilizationThreshold, startingWei
         weightRange = (min(x0), max(x0))
         del x0
         weights = (randomWeights(weightRange), randomWeights(weightRange), randomWeights(weightRange))
-    print("Starting Weights: ")
-    print(weights)
     stabilizationTime = 0
     stepSize = 0.1
     currentSolution = None
@@ -84,7 +103,7 @@ def drawPoint(data):
         c = "red"
     else:
         c = "blue"
-    return point((data[1],data[2]),color=c)
+    return point((data[0],data[1]),color=c)
 
 points = sum(map(drawPoint, trainingData))
 final = plot(-(solution[1]/solution[2])*x-(solution[0]/solution[1])  , 1, 6, color="green") + points
