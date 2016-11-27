@@ -63,5 +63,5 @@ def drawPoint(data):
     return point((data[1],data[2]),color=c)
 
 points = sum(map(drawPoint, trainingData))
-final = plot(-(solution[1]/solution[2])*x-(solution[0]/solution[1])  , 1, 6, color="green") + points
+final = plot(-(solution[1]/solution[2])*x-(solution[0]/solution[1])  , -1, 10, color="green") + points
 show(final)

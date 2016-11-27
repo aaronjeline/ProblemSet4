@@ -68,6 +68,8 @@ def classify(trainingData, trainingFunction, stabilizationThreshold, startingWei
         weightRange = (min(x0), max(x0))
         del x0
         weights = (randomWeights(weightRange), randomWeights(weightRange), randomWeights(weightRange))
+    print("Starting Weights: ")
+    print(weights)
     stabilizationTime = 0
     stepSize = 0.1
     currentSolution = None
@@ -103,10 +105,10 @@ def drawPoint(data):
         c = "red"
     else:
         c = "blue"
-    return point((data[0],data[1]),color=c)
+    return point((data[1],data[2]),color=c)
 
 points = sum(map(drawPoint, trainingData))
-final = plot(-(solution[1]/solution[2])*x-(solution[0]/solution[1])  , 1, 6, color="green") + points
+final = plot(-(solution[1]/solution[2])*x-(solution[0]/solution[1])  , -1, 10, color="green") + points
 show(final)
 </script>
 
