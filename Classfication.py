@@ -12,7 +12,7 @@ def rankAttribute(decisions, attribute):
     entropy = None
     positiveYs = []
     negativeYs = []
-    for i in len(attribute):
+    for i in range(len(attribute)):
         if attribute[i] == 1:
             positiveYs.append(decisions[i])
         else:
@@ -30,8 +30,8 @@ def rankAttribute(decisions, attribute):
 class Node:
     isLeaf = None
     children = {}
-    def node(self, trainingDecisions, trainingAttributes):
-        entropies = list(map(lambda x: rankAttribute(trainingAttributes, x), trainingAttributes))
+    def __init__(self, trainingDecisions, trainingAttributes):
+        entropies = list(map(lambda x: rankAttribute(trainingDecisions, x), trainingAttributes))
         #Check if they are all homogenous sets
         if all(map(lambda x: x==0, entropies)):
             #We are a leaf
@@ -43,12 +43,12 @@ class Node:
             for i in vals:
                 newDecision = []
                 newAttributes = []
-                for j in len(trainingAttributes)-1:
+                for j in range(len(trainingAttributes)-1):
                     newAttributes.append([])
                 #Construct the new list
-                for j in len(trainingAttributes[pivotIndex]):
+                for j in range(len(trainingAttributes[pivotIndex])):
                     if trainingAttributes[pivotIndex][j]==i:
-                        for k in len(trainingAttributes):
+                        for k in range(len(trainingAttributes)):
                             if k!=pivotIndex:
                                 newAttributes[k].append(trainingAttributes[pivotIndex][j])
                         newDecision.append(trainingDecisions[j])
@@ -56,10 +56,10 @@ class Node:
 
 
 
-A1 = [1, 1, 0, 1, 1]
-A2 = [0, 0, 1, 1, 1]
-A3 = [0, 1, 0, 1, 0]
-Y = [False, False, False, True, True]
-LA = [A1, A2, A3]
-entropies = map(lambda x: rankAttribute(Y, x), LA)
-print(list(entropies))
+A1 = [1,1,1,1,1,]
+A2 = [1, 1, 0, 1, 1]
+A3 = [0, 0, 1, 1, 1]
+A4 = [0, 1, 0, 1, 0]
+Y = [0,0,0,1,1]
+LA = [A1, A2, A3, A4]
+topNode = Node(Y, LA)
