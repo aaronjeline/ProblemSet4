@@ -26,8 +26,8 @@ def classify(trainingData, trainingFunction):
     print(weights)
     stepSize = 0.1
     currentSolution = None
-    while time < 1000:
-        stepSize = 1000/(1000 + time)
+    while time < 100000:
+        stepSize = 1/10
         newWeights = list(weights)
         sample = trainingData[random.randrange(len(trainingData))]
         for i in range(len(sample[:-1])):

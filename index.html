@@ -61,25 +61,24 @@ def randomWeights(weightRange):
 
 
 # Allows you to specify alternate starting weights
-def classify(trainingData, trainingFunction, stabilizationThreshold, startingWeights=None):
-    weights = tuple()
+def classify(trainingData, trainingFunction):
+    time = 0
     #Generate our random weights
-    if startingWeights==None:
-        x0 = list(map(lambda x: x[0], trainingData))
-        weightRange = (min(x0), max(x0))
-        del x0
-        weights = (randomWeights(weightRange), randomWeights(weightRange), randomWeights(weightRange))
+    x0 = list(map(lambda x: x[0], trainingData))
+    weightRange = (min(x0), max(x0))
+    del x0
+    weights = (randomWeights(weightRange), randomWeights(weightRange), randomWeights(weightRange))
     print("Starting Weights: ")
     print(weights)
-    stabilizationTime = 0
     stepSize = 0.1
     currentSolution = None
-    while(stabilizationTime < stabilizationThreshold):
+    while time < 1000:
+        stepSize = 1000/(1000 + time)
         newWeights = list(weights)
         sample = trainingData[random.randrange(len(trainingData))]
         for i in range(len(sample[:-1])):
             newWeights[i] = trainingFunction(weights, stepSize, sample, h, i)
-        stabilizationTime += 1
+        time += 1
         currentSolution = newWeights
         weights = newWeights
     return currentSolution
@@ -98,7 +97,7 @@ trainingData = [
     [1,3,20,1],
 ]
 
-solution = classify(trainingData, hardThresholdStep, 1000)
+solution = classify(trainingData, hardThresholdStep)
 
 def drawPoint(data):
     c = ""
