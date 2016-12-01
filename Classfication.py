@@ -29,6 +29,8 @@ class Node:
         self.isLeaf = isLeaf
         if isLeaf:
             self.answer = trainingDecisions[0]
+            self.children = None
+            print("Leaf! answer = " + str(self.answer))
             return
         entropies = list(map(lambda x: rankAttribute(trainingDecisions, x), trainingAttributes))
         #Pick the best attribute to work with
@@ -56,6 +58,7 @@ class Node:
                 self.pivotIndex = pivotIndex
 
             #Create the new child
+            print("Branch! Attribute "+ str(pivotIndex) + "val: " + str(i))
             self.children[i] = Node(newDecision, newAttributes, _isLeaf)
 
 
@@ -67,4 +70,3 @@ A3 = [0, 1, 0, 1, 0]
 Y = [0,0,0,1,1]
 LA = [A1, A2, A3]
 topNode = Node(Y, LA)
-print(topNode)
