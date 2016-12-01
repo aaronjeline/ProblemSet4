@@ -77,8 +77,7 @@ def classify(trainingData, trainingFunction):
     print(weights)
     stepSize = 0.1
     currentSolution = None
-    while time < 1000:
-        stepSize = 1000/(1000 + time)
+    while time < 1000000:
         newWeights = list(weights)
         sample = trainingData[random.randrange(len(trainingData))]
         for i in range(len(sample[:-1])):
@@ -115,6 +114,7 @@ def drawPoint(data):
 points = sum(map(drawPoint, trainingData))
 final = plot(-(solution[1]/solution[2])*x-(solution[0]/solution[1])  , -1, 10, color="green") + points
 show(final)
+
 </script>
 
 
